@@ -32,7 +32,7 @@ jobs:
           source /home/ubuntu/waste_classification/myenv/bin/activate
 
           echo "📦 Installing dependencies"
-          pip install --no-cache-dir -r requirements.txt
+          echo "Skipping pip install (already installed)"
 
           echo "🔁 Restarting FastAPI service"
           sudo systemctl restart fastapi
