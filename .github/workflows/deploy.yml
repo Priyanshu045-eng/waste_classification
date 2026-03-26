@@ -11,17 +11,30 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Deploy to EC2 via SSH
-      uses: appleboy/ssh-action@v0.1.6
+      uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
         script: |
-          cd ~/waste_classification
+          echo "🚀 Connected to EC2"
+
+          cd /home/ubuntu/waste_classification
+
+          echo "📥 Pulling latest code"
           git pull origin main
-          source myenv/bin/activate
+
+          echo "🐍 Activating virtual environment"
+          source /home/ubuntu/waste_classification/myenv/bin/activate
+
+          echo "📦 Installing dependencies"
           pip install --no-cache-dir -r requirements.txt
-          sudo systemctl restart fastapi || true
+
+          echo "🔁 Restarting FastAPI service"
+          sudo systemctl restart fastapi
+
+          echo "✅ Deployment complete"
