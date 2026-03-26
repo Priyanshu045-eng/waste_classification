@@ -1,4 +1,4 @@
-name: Deploy FastAPI to EC2
+name: Deploy to EC2
 
 on:
   push:
@@ -10,36 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Deploy to EC2 via SSH
-      uses: appleboy/ssh-action@v0.1.10
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
-        script: |
-          set -e   # stop if any error occurs
-
-          echo "🚀 Connected to EC2"
-
-          cd /home/ubuntu/waste_classification
-
-          echo "📥 Pulling latest code"
-          git pull origin main
-
-          echo "🐍 Activating virtual environment"
-          source /home/ubuntu/waste_classification/myenv/bin/activate
-
-          echo "⚡ Restarting FastAPI service"
-          sudo systemctl restart fastapi &
-
-          echo "⏳ Waiting for service..."
-          sleep 3
-
-          echo "📊 Checking service status"
-          sudo systemctl is-active fastapi
-
-          echo "✅ Deployment complete 🚀"
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/waste_classification
+            git pull origin main
+            source venv/bin/activate
+            pip install -r requirements.txt
+            sudo systemctl restart mlapp
