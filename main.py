@@ -6,9 +6,7 @@ from PIL import Image
 import io
 import uvicorn
 
-# ============================================================
-# Initialize FastAPI
-# ============================================================
+
 app = FastAPI(
     title="🗑️ AI Waste Classification API",
     description="Classifies waste — always returns the most harmful category first",
