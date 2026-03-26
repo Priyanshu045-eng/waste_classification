@@ -20,9 +20,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ============================================================
-# Load Model
-# ============================================================
+
 MODEL_PATH = "best.pt"
 model = YOLO(MODEL_PATH)
 print(f"✅ Model loaded: {MODEL_PATH}")
