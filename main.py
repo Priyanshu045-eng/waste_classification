@@ -27,9 +27,7 @@ MODEL_PATH = "best.pt"
 model = YOLO(MODEL_PATH)
 print(f"✅ Model loaded: {MODEL_PATH}")
 
-# ============================================================
-# Class Definitions
-# ============================================================
+
 CLASS_NAMES = [
     'cardboard', 'glass', 'metal', 'paper', 'plastic',
     'trash', 'organic', 'battery', 'biological', 'clothes', 'shoes',
