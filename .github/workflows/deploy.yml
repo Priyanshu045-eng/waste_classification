@@ -21,6 +21,8 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         script: |
+          set -e   # stop if any error occurs
+
           echo "🚀 Connected to EC2"
 
           cd /home/ubuntu/waste_classification
@@ -31,14 +33,13 @@ jobs:
           echo "🐍 Activating virtual environment"
           source /home/ubuntu/waste_classification/myenv/bin/activate
 
-          echo "📦 Installing dependencies"
-          echo "Skipping pip install (already installed)"
-
           echo "⚡ Restarting FastAPI service"
           sudo systemctl restart fastapi &
 
-          echo "📊 Checking service status"
+          echo "⏳ Waiting for service..."
           sleep 3
-          sudo systemctl status fastapi --no-pager
+
+          echo "📊 Checking service status"
+          sudo systemctl is-active fastapi
 
           echo "✅ Deployment complete 🚀"
