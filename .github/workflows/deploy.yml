@@ -34,7 +34,11 @@ jobs:
           echo "📦 Installing dependencies"
           echo "Skipping pip install (already installed)"
 
-          echo "🔁 Restarting FastAPI service"
-          sudo systemctl restart fastapi
+          echo "⚡ Restarting FastAPI service"
+          sudo systemctl restart fastapi &
 
-          echo "✅ Deployment complete"
+          echo "📊 Checking service status"
+          sleep 3
+          sudo systemctl status fastapi --no-pager
+
+          echo "✅ Deployment complete 🚀"
