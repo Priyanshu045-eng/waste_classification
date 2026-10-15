@@ -4,3 +4,5 @@ ultralytics
 python-multipart
 pillow
 numpy
+streamlit
+altair
